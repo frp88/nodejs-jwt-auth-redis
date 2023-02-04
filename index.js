@@ -41,6 +41,20 @@ app.get('/dashboard', verifyToken, (req, res) => {
     return res.json({status: true, message: 'Olá página de Dashboard! :-)'})
 })
 
+// Logout
+app.get('/logout', verifyToken, (req, res) => {
+    const username = req.userData.sub
+
+    // Remove o refresh token
+    refreshTokens = refreshTokens.filter(x => x.username !== username)
+
+    console.log('--------------------- REFRESH TOKENS ARMAZENADOS -----------------------')
+    console.log(refreshTokens)
+
+    return res.json({status: true, message: 'Refresh token removido com sucesso.'})
+})
+
+
 // Middleware para verificar o Token
 function verifyToken(req, res, next){
     try{
